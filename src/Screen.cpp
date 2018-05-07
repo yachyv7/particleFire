@@ -50,7 +50,9 @@ bool Screen::init() {
 
 void Screen::boxBlur() {
 	// Swap the buffers, so pixels is in m_buffer2 and we are drawing to m_buffer1
+	Uint32 *temp = m_buffer2;
 	m_buffer2 = m_buffer1;
+	m_buffer1 = temp;
 
 	for (int y = 0; y < SCREEN_HEIGHT; y++) {
 		for (int x = 0; x < SCREEN_WIDTH; x++) {
@@ -124,6 +126,7 @@ bool Screen::processEvent() {
 
 void Screen::close() {
 	delete [] m_buffer1;
+	delete [] m_buffer2;
 	SDL_DestroyTexture(m_texture);
 	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
